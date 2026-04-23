@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GamersZone</title>
+<link rel="stylesheet" href="style.css">
+    <style>
+        body.dark {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        body.dark header {
+            background-color: #1e1e1e;
+        }
+        body.dark .hero {
+            background-color: #1e1e1e;
+        }
+        body.dark .feature {
+            background-color: #2a2a2a;
+        }
+        body.dark footer {
+            background-color: #1e1e1e;
+        }
+        body.dark a, body.dark button {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">GamersZone</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="streams.html">Streams</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="#" id="login-link">Login / Signup</a>
+        <a href="#" id="logout-link" style="display:none;">Logout</a>
+        <button id="dark-toggle">🌙</button>
+    </nav>
+</header>
+
+<section class="hero">
+    <div style="text-align: center;">
+        <img id="hero-img" src="https://images.unsplash.com/photo-1640695254597-7ee90eed00fb?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Professional Gaming Hero" style="width:100%; height:60vh; object-fit:cover; border-radius:0;">
+        <br style="display:none;">
+        <button onclick="prevImg()" style="padding:10px 20px; margin:5px; background:#f02c2c; color:white; border:none; border-radius:5px; cursor:pointer;">Prev</button>
+        <button onclick="nextImg()" style="padding:10px 20px; margin:5px; background:#f02c2c; color:white; border:none; border-radius:5px; cursor:pointer;">Next</button>
+        <br><br>
+        <h1>Watch Paid Streams & Join Tournaments</h1>
+        <p>Play, watch, and earn rewards!</p>
+        <a class="btn" href="streams.html">Explore Streams</a>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature">
+        <h2>Paid Streams</h2>
+        <p>Watch live gaming and sports streams by paying for access.</p>
+    </div>
+    <div class="feature">
+        <h2>Tournaments</h2>
+        <p>Join tournaments, compete, and win exciting rewards.</p>
+    </div>
+    <div class="feature">
+        <h2>Community</h2>
+        <p>Chat, interact, and connect with other players.</p>
+    </div>
+</section>
+
+<section class="quote-section" style="padding:50px 20px; text-align:center; background:#1a1a1a;">
+    <h2 style="color:#f02c2c;">Gaming Wisdom</h2>
+    <h3 id="quote">Click for motivation!</h3>
+    <button onclick="generateQuote()" style="padding:12px 24px; background:#f02c2c; color:white; border:none; border-radius:5px; cursor:pointer; font-size:1.1rem;">New Quote</button>
+</section>
+
+<footer>
+    <p>&copy; 2026 StreamHub. All rights reserved.</p>
+</footer>
+
+<script>
+    const loginLink = document.getElementById('login-link');
+    const logoutLink = document.getElementById('logout-link');
+
+    // Check login state
+    if(localStorage.getItem('loggedIn') === 'true') {
+        loginLink.style.display = 'none';
+        logoutLink.style.display = 'inline';
+    }
+
+    // Logout function
+    logoutLink.addEventListener('click', () => {
+        localStorage.removeItem('loggedIn');
+        window.location.href = 'index.html';
+    });
+
+    // Dark Mode Toggle
+    const darkToggle = document.getElementById('dark-toggle');
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        body.classList.add('dark');
+        darkToggle.textContent = '☀️';
+    }
+
+    darkToggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
+        if (body.classList.contains('dark')) {
+            localStorage.setItem('darkMode', 'enabled');
+            darkToggle.textContent = '☀️';
+        } else {
+            localStorage.setItem('darkMode', 'disabled');
+            darkToggle.textContent = '🌙';
+        }
+    });
+
+    // Image Slider with Local High Quality Image
+    let heroImages = [
+        "New folder/image.png",
+        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=1400&h=700&fit=crop&q=90",
+        "https://images.unsplash.com/photo-1611749345496-e7d7efbb2dbc?w=1400&h=700&fit=crop&q=90"
+    ];
+    let heroIndex = 0;
+    function showHero() {
+        document.getElementById("hero-img").src = heroImages[heroIndex];
+    }
+    function nextImg() {
+        heroIndex = (heroIndex + 1) % heroImages.length;
+        showHero();
+    }
+    function prevImg() {
+        heroIndex = (heroIndex - 1 + heroImages.length) % heroImages.length;
+        showHero();
+    }
+    showHero(); // Init
+
+    // Random Quote Generator
+    let gamingQuotes = [
+        "Stay hungry, stay foolish - Steve Jobs (for gamers)",
+        "Practice makes perfect - Gaming Proverb",
+        "Never give up - The Gamer's Motto",
+        "GG EZ - When you win",
+        "One more game... - Every gamer's last words"
+    ];
+    function generateQuote() {
+        let i = Math.floor(Math.random() * gamingQuotes.length);
+        document.getElementById("quote").textContent = gamingQuotes[i];
+    }
+</script>
+</body>
+</html>

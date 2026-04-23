@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Streams - StreamHub</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <div class="logo">StreamHub</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="streams.html">Streams</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="login.html" id="login-link">Login / Signup</a>
+        <a href="#" id="logout-link" style="display:none;">Logout</a>
+    </nav>
+</header>
+
+<section class="streams-section">
+    <h1>Live & Upcoming Streams</h1>
+    <div class="stream-list">
+        <div class="stream-item">
+            <h3>Free Fire Championship Live</h3>
+            <p>Game: Free Fire</p>
+            <p>Start Time: 2026-02-10 5:00 PM</p>
+            <p>Price: $5</p>
+            <button class="watch-btn">Pay & Watch</button>
+        </div>
+        <div class="stream-item">
+            <h3>PUBG Solo Tournament Stream</h3>
+            <p>Game: PUBG</p>
+            <p>Start Time: 2026-02-12 6:00 PM</p>
+            <p>Price: $7</p>
+            <button class="watch-btn">Pay & Watch</button>
+        </div>
+        <div class="stream-item">
+            <h3>Call of Duty Team Battle</h3>
+            <p>Game: Call of Duty</p>
+            <p>Start Time: 2026-02-14 7:00 PM</p>
+            <p>Price: $8</p>
+            <button class="watch-btn">Pay & Watch</button>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 StreamHub. All rights reserved.</p>
+</footer>
+
+<script>
+    const loginLink = document.getElementById('login-link');
+    const logoutLink = document.getElementById('logout-link');
+
+    if(localStorage.getItem('loggedIn') === 'true') {
+        loginLink.style.display = 'none';
+        logoutLink.style.display = 'inline';
+    }
+
+    logoutLink.addEventListener('click', () => {
+        localStorage.removeItem('loggedIn');
+        window.location.href = 'index.html';
+    });
+</script>
+</body>
+</html>

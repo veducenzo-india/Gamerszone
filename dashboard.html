@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - StreamHub</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <div class="logo">StreamHub</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="streams.html">Streams</a>
+        <a href="tournaments.html">Tournaments</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="login.html" id="login-link">Login / Signup</a>
+        <a href="#" id="logout-link" style="display:none;">Logout</a>
+    </nav>
+</header>
+
+<section class="dashboard-section">
+    <h1>Welcome to Your Dashboard</h1>
+    <p>Here you can see your active streams, joined tournaments, and rewards.</p>
+
+    <div class="dashboard-content">
+        <div class="dashboard-item">
+            <h3>Joined Streams</h3>
+            <ul>
+                <li>Free Fire Championship Live</li>
+                <li>PUBG Solo Tournament Stream</li>
+            </ul>
+        </div>
+        <div class="dashboard-item">
+            <h3>Joined Tournaments</h3>
+            <ul>
+                <li>Free Fire Battle Royale</li>
+                <li>COD Team Deathmatch</li>
+            </ul>
+        </div>
+        <div class="dashboard-item">
+            <h3>Rewards</h3>
+            <p>You have earned 150 points!</p>
+        </div>
+    </div>
+
+    <!-- To-Do List -->
+    <div style="text-align:center; margin:50px 0; padding:20px; background:#2c2c2c; border-radius:10px;">
+        <h3>Your Gaming Tasks</h3>
+        <input type="text" id="task-input" placeholder="Add gaming task..." style="padding:10px; width:300px;">
+        <button onclick="addTask()" style="padding:10px 20px; background:#f02c2c; color:white; border:none; border-radius:5px;">Add Task</button>
+        <ul id="task-list" style="list-style:none; padding:0;"></ul>
+    </div>
+
+    <!-- Simple Quiz -->
+    <div style="text-align:center; margin:50px 0; padding:20px; background:#2c2c2c; border-radius:10px;">
+        <h3>Gaming Quiz</h3>
+        <p id="quiz-q"></p>
+        <button onclick="checkAns(0)" style="padding:10px 20px; margin:5px; background:#f02c2c; color:white; border:none; border-radius:5px;">A</button>
+        <button onclick="checkAns(1)" style="padding:10px 20px; margin:5px; background:#f02c2c; color:white; border:none; border-radius:5px;">B</button>
+        <p id="quiz-score"></p>
+    </div>
+
+    <!-- Digital Clock -->
+    <div style="text-align:center; margin:50px 0;">
+        <h3>Live Clock</h3>
+        <h2 id="dash-clock" style="font-size:3rem; color:#f02c2c;"></h2>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 StreamHub. All rights reserved.</p>
+</footer>
+
+<script>
+const loginLink = document.getElementById('login-link');
+const logoutLink = document.getElementById('logout-link');
+if(localStorage.getItem('loggedIn') === 'true') {
+    loginLink.style.display = 'none';
+    logoutLink.style.display = 'inline';
+} else {
+    window.location.href = 'login.html';
+}
+logoutLink.addEventListener('click', () => {
+    localStorage.removeItem('loggedIn');
+    window.location.href = 'index.html';
+});
+
+// To-Do List
+function addTask() {
+    let taskText = document.getElementById('task-input').value;
+    if (!taskText) return;
+    let li = document.createElement('li');
+    li.style.margin = '5px';
+    li.style.cursor = 'pointer';
+    li.textContent = taskText;
+    li.onclick = function() { this.style.textDecoration = 'line-through'; };
+    let delBtn = document.createElement('button');
+    delBtn.textContent = 'X';
+    delBtn.style.marginLeft = '10px';
+    delBtn.style.background = '#f02c2c';
+    delBtn.style.color = 'white';
+    delBtn.style.border = 'none';
+    delBtn.style.padding = '2px 8px';
+    delBtn.style.cursor = 'pointer';
+    delBtn.onclick = function(e) { e.stopPropagation(); li.remove(); };
+    li.appendChild(delBtn);
+    document.getElementById('task-list').appendChild(li);
+    document.getElementById('task-input').value = '';
+}
+
+// Quiz
+let quizQuestions = [
+    {q: "What does GG mean?", a:["Good Game","Game Over"], correct:0},
+    {q: "Best FPS game?", a:["Fortnite","CS:GO"], correct:1}
+];
+let quizIndex = 0, quizScore = 0;
+function loadQuiz() {
+    let q = quizQuestions[quizIndex];
+    document.getElementById('quiz-q').textContent = q.q + ' ' + q.a.join(' / ');
+}
+function checkAns(ans) {
+    if(ans === quizQuestions[quizIndex].correct) quizScore++;
+    quizIndex++;
+    if(quizIndex < quizQuestions.length) loadQuiz();
+    else document.getElementById('quiz-score').textContent = 'Score: ' + quizScore;
+}
+loadQuiz();
+
+// Clock
+setInterval(() => {
+    let now = new Date();
+    document.getElementById('dash-clock').textContent = now.toLocaleTimeString();
+}, 1000);
+</script>
+</body>
+</html>
